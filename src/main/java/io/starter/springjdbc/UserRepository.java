@@ -34,6 +34,17 @@ public class UserRepository {
                     }
                 });
 
+        // using java 8 lamdba expression
+//        jdbcTemplate
+//                .query("select * from users", (rs, rowNum) -> {
+//                    long id = rs.getLong("id");
+//                    String name = rs.getString("name");
+//
+//                    User user = new User(id, name);
+//                    return user;
+//                });
+
+
         return users;
     }
 
