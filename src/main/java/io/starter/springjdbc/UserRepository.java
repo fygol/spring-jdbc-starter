@@ -3,9 +3,12 @@ package io.starter.springjdbc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -20,7 +23,16 @@ public class UserRepository {
 
     public List<User> findAllUsers() {
         List<User> users = jdbcTemplate
-                .query("select * from users", new BeanPropertyRowMapper<User>());
+                .query("select * from users", new RowMapper<User>() {
+                    @Override
+                    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        long id = rs.getLong("id");
+                        String name = rs.getString("name");
+
+                        User user = new User(id, name);
+                        return user;
+                    }
+                });
 
         return users;
     }

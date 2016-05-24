@@ -28,6 +28,7 @@ public class AppConfigTest {
         conn.close();
 
         List<User> users = ctx.getBean(UserRepository.class).findAllUsers();
+        System.out.println(users);
         assertEquals(3, users.size());
     }
 }
